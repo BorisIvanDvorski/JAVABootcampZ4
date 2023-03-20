@@ -19,8 +19,15 @@ public class Main {
                 map.put(key,value);
             }
         }
-        for(String i : map.keySet()) {
-            System.out.println(i+" by "+map.get(i));
+        Map<String, String> result = map.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+        for(String i : result.keySet()) {
+            System.out.println(i+" by "+result.get(i)+".");
         }
     }
 }
